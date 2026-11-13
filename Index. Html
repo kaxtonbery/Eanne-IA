@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>Earnne AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1220;color:#f4f7fb;font-family:Arial,sans-serif}
+.wrap{max-width:760px;margin:auto;padding:18px 14px 100px}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.logo{background:linear-gradient(135deg,#57d6a1,#7aa7ff);color:#071321;padding:13px;border-radius:14px;font-weight:bold}
+.brand{font-size:21px;font-weight:bold}
+.tag{font-size:12px;color:#57d6a1;border:1px solid #345;padding:7px;border-radius:20px}
+.hero,.card,.tile,.stat{background:#142239;border:1px solid #293c58;border-radius:18px;padding:17px;margin-bottom:12px}
+.hero{background:linear-gradient(135deg,#173c3a,#182c4c)}
+h1{font-size:32px;margin:12px 0}
+h2{font-size:21px}
+p{color:#b8c5d8;line-height:1.5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}
+.stat strong{display:block;font-size:25px;margin-top:7px}
+button{font-size:15px;cursor:pointer;border:0;border-radius:12px;padding:12px;font-weight:bold}
+.primary{background:#57d6a1;color:#08251b}
+.secondary{background:#29405f;color:white}
+.full{width:100%;margin-top:10px}
+.notice{background:#3b3020;color:#ffe1b0;padding:13px;border-radius:13px;font-size:13px;line-height:1.5;margin:14px 0}
+.page{display:none}
+.page.active{display:block}
+.choice{display:block;width:100%;text-align:left;margin:8px 0;background:#20334e;color:white;border:1px solid #40516c}
+.choice:disabled{opacity:.6}
+.result{color:#57d6a1;font-weight:bold;margin-top:10px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#101827;border-top:1px solid #293c58;display:flex;justify-content:center;padding:8px}
+.nav{width:min(100%,760px);display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.nav button{background:transparent;color:#a8b4c7;font-size:12px;padding:9px 2px}
+.nav button.active{color:#57d6a1;background:#1a3040}
+.nav span{display:block;font-size:20px;margin-bottom:4px}
+footer{text-align:center;color:#8795aa;font-size:12px;margin-top:25px}
+@media(max-width:430px){.grid{grid-template-columns:1fr}h1{font-size:29px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div class="brand"><span class="logo">EA</span> Earnne AI</div>
+<span class="tag">Bienvenue</span>
+</header>
+
+<main>
+<section id="home" class="page active">
+<div class="hero">
+<p style="color:#57d6a1;font-weight:bold">BIENVENUE SUR EARNNE AI</p>
+<h1>Apprends, joue et découvre !</h1>
+<p>Découvre nos sondages, nos jeux et nos futurs outils d'intelligence artificielle.</p>
+<button class="primary" onclick="showPage('surveys')">Commencer</button>
+</div>
+
+<div class="stats">
+<div class="stat">Mes points démo<strong id="points">0</strong></div>
+<div class="stat">Activités terminées<strong id="done">0</strong></div>
+</div>
+
+<div class="notice">Attention : les points actuels sont fictifs. Ils ne représentent pas de l'argent et ne peuvent pas être retirés.</div>
+
+<h2>Nos services</h2>
+<div class="grid">
+<div class="tile"><h2>📋 Sondages</h2><p>Réponds à des questions.</p><button class="secondary full" onclick="showPage('surveys')">Ouvrir</button></div>
+<div class="tile"><h2>🎮 Jeux</h2><p>Teste tes connaissances.</p><button class="secondary full" onclick="showPage('games')">Jouer</button></div>
+<div class="tile"><h2>🤖 Intelligence artificielle</h2><p>Nos outils IA arrivent bientôt.</p><button class="secondary full" onclick="showPage('ai')">Découvrir</button></div>
+<div class="tile"><h2>💳 Retraits</h2><p>Les paiements ne sont pas encore activés.</p><button class="secondary full" onclick="showPage('withdraw')">Voir</button></div>
+</div>
+</section>
+
+<section id="surveys" class="page">
+<button class="secondary" onclick="showPage('home')">← Accueil</button>
+<h2>📋 Sondages de démonstration</h2>
+<p>Choisis une réponse pour tester le site.</p>
+<div class="card">
+<span class="tag">5 points démo</span>
+<h3>Quel appareil utilises-tu le plus ?</h3>
+<div id="survey1">
+<button class="choice" onclick="survey(1,this)">Téléphone Android</button>
+<button class="choice" onclick="survey(1,this)">iPhone</button>
+<button class="choice" onclick="survey(1,this)">Ordinateur</button>
+</div>
+<div class="result" id="result1"></div>
+</div>
+<div class="card">
+<span class="tag">5 points démo</span>
+<h3>Quel sujet veux-tu apprendre ?</h3>
+<div id="survey2">
+<button class="choice" onclick="survey(2,this)">Intelligence artificielle</button>
+<button class="choice" onclick="survey(2,this)">Commerce en ligne</button>
+<button class="choice" onclick="survey(2,this)">Informatique</button>
+</div>
+<div class="result" id="result2"></div>
+</div>
+<div class="notice">Ces questions sont uniquement des exemples. Elles ne sont pas fournies par des partenaires et ne donnent pas droit à un paiement.</div>
+</section>
+
+<section id="games" class="page">
+<button class="secondary" onclick="showPage('home')">← Accueil</button>
+<h2>🎮 Quiz Earnne AI</h2>
+<div class="card">
+<span class="tag">Jeu démo · 10 points</span>
+<h3 id="question">Que signifie IA ?</h3>
+<div id="answers"></div>
+<div class="result" id="quizResult"></div>
+<button id="next" class="primary full" style="display:none" onclick="nextQuestion()">Question suivante</button>
+</div>
+<div class="notice">Les points du quiz sont fictifs et ne peuvent pas être échangés contre de l'argent.</div>
+</section>
+
+<section id="ai" class="page">
+<button class="secondary" onclick="showPage('home')">← Accueil</button>
+<h2>🤖 Outils IA</h2>
+<div class="card">
+<h3>Les outils IA arrivent bientôt !</h3>
+<p>Nous préparons des outils pour t'aider à écrire, apprendre et travailler. Une connexion à un service IA pourra nécessiter un financement.</p>
+</div>
+</section>
+
+<section id="withdraw" class="page">
+<button class="secondary" onclick="showPage('home')">← Accueil</button>
+<h2>💳 Retraits</h2>
+<div class="card">
+<h3>Retraits pas encore disponibles</h3>
+<p>Nous étudierons les paiements MTN Mobile Money et Moov Money au Bénin. Aucun retrait ne sera proposé avant d'avoir des partenaires fiables, un financement réel et un système de paiement vérifié.</p>
+</div>
+</section>
+</main>
+<footer>Earnne AI · Prototype gratuit · 2026</footer>
+</div>
+
+<nav class="bottom">
+<div class="nav">
+<button class="active" data-page="home" onclick="showPage('home')"><span>🏠</span>Accueil</button>
+<button data-page="surveys" onclick="showPage('surveys')"><span>📋</span>Sondages</button>
+<button data-page="games" onclick="showPage('games')"><span>🎮</span>Jeux</button>
+<button data-page="ai" onclick="showPage('ai')"><span>🤖</span>IA</button>
+</div>
+</nav>
+
+<script>
+let points=Number(localStorage.getItem("ea_points")||0);
+let done=Number(localStorage.getItem("ea_done")||0);
+let answered=JSON.parse(localStorage.getItem("ea_surveys")||"{}");
+let q=0,quizDone=false;
+
+const questions=[
+{question:"Que signifie IA ?",answers:["Internet automatique","Intelligence artificielle","Image animée"],correct:1},
+{question:"Quel appareil tient dans la poche ?",answers:["Téléphone","Réfrigérateur","Télévision"],correct:0},
+{question:"Quel mot de passe est le plus sûr ?",answers:["123456","motdepasse","Une longue phrase unique"],correct:2}
+];
+
+function update(){
+document.getElementById("points").textContent=points;
+document.getElementById("done").textContent=done;
+localStorage.setItem("ea_points",points);
+localStorage.setItem("ea_done",done);
+}
+function showPage(id){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+window.scrollTo(0,0);
+}
+function survey(id,button){
+let result=document.getElementById("result"+id);
+if(answered[id]){result.textContent="Tu as déjà répondu à cette question.";return;}
+answered[id]=true;
+button.style.borderColor="#57d6a1";
+points+=5;done++;
+localStorage.setItem("ea_surveys",JSON.stringify(answered));
+result.textContent="+5 points démo ! Merci pour ta réponse.";
+update();
+}
+function renderQuiz(){
+let item=questions[q];
+document.getElementById("question").textContent=item.question;
+document.getElementById("answers").innerHTML="";
+item.answers.forEach((a,i)=>{
+let b=document.createElement("button");
+b.className="choice";
+b.textContent=a;
+b.onclick=()=>answerQuiz(i);
+document.getElementById("answers").appendChild(b);
+});
+document.getElementById("quizResult").textContent="";
+document.getElementById("next").style.display="none";
+quizDone=false;
+}
+function answerQuiz(i){
+if(quizDone)return;
+quizDone=true;
+if(i===questions[q].correct){
+points+=10;done++;update();
+document.getElementById("quizResult").textContent="Bonne réponse ! +10 points démo.";
+}else{
+document.getElementById("quizResult").textContent="Pas tout à fait. Essaie la prochaine question.";
+}
+document.querySelectorAll("#answers button").forEach(b=>b.disabled=true);
+document.getElementById("next").style.display="block";
+document.getElementById("next").textContent=q===questions.length-1?"Recommencer":"Question suivante";
+}
+function nextQuestion(){
+q=(q+1)%questions.length;
+renderQuiz();
+}
+update();
+Object.keys(answered).forEach(id=>{
+if(answered[id])document.getElementById("result"+id).textContent="Tu as déjà répondu à cette question.";
+});
+renderQuiz();
+</script>
+</body>
+</html>
